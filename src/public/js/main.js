@@ -1,6 +1,9 @@
 //creating a map template, with coordinates and zoom
 const map = L.map("map-template").setView([-31.416668, -64.183334], 13);
 
+//initializing connection for socket.io
+const socket = io();
+
 //choosing a map style
 const tileURL = "https://a.tile.openstreetmap.de/{z}/{x}/{y}.png";
 
