@@ -20,12 +20,19 @@ map.on("locationfound", (e) => {
 	const coords = [e.latlng.lat, e.latlng.lng]; //getting our user coordinates
 	const marker = L.marker(coords); //creating a location marker
 	marker.bindPopup("You are here!"); //adding to our marker a message
+	map.addLayer(marker); //adding user location's marker with message layer to our map
+	socket.emit("userCoordinates", e.latlng); //emiting event
 });
-//creating my city's location marker
-const marker = L.marker([-31.416668, -64.183334]);
 
-//adding to my marker a message
-marker.bindPopup("Hello there, welcome to my city!");
+//listening event
+socket.on("newUserCoordinates", (coords) => {
+	//creating new user's location marker
+	console.log("A new user is connected");
+	const marker = L.marker([coords.lat + 1, coords.lng + 1]); //moving coordinates to see the new marker when testing it myself
 
-//adding my marker with message layer to our map
-map.addLayer(marker);
+	//adding to new user's marker a message
+	marker.bindPopup("Hello there, new user!");
+
+	//adding new user's marker with message layer to our map
+	map.addLayer(marker);
+});
